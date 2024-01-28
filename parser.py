@@ -11,10 +11,9 @@ class Parser:
     pageUrl = None
     articles = []
 
-    def __init__(self):
+    def __init__(self, date):
         # self.pageUrl = "https://tldr.tech/api/latest/tech"
-        # self.pageUrl = "https://tldr.tech/tech/2024-01-16"
-        self.pageUrl = "https://tldr.tech/tech/2024-01-26"
+        self.pageUrl = "https://tldr.tech/tech/" + date
         self.articles = []
 
     def getPage(self):

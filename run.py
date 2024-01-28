@@ -2,6 +2,7 @@
 import sys
 from parser import Parser
 from minio import Minio
+from datetime import datetime
 
 file = "rss.xml"
 minio_host="play.min.io:9443"
@@ -11,7 +12,7 @@ minio_secret_key="zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG"
 minio_bucket = "test"
 minio_dest_file = "tldr/rss.xml"
  
-parser = Parser()
+parser = Parser(datetime.now().strftime("%Y-%m-%d"))
 print("Downloading page ...")
 error = parser.getPage()
 if error != None:
