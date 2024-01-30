@@ -2,6 +2,8 @@
 import re
 from urllib.request import urlopen
 from urllib.error import HTTPError, URLError
+from datetime import datetime
+from email import utils
 from bs4 import BeautifulSoup
 from article import Article
 
@@ -15,6 +17,9 @@ class Parser:
         # self.pageUrl = "https://tldr.tech/api/latest/tech"
         self.pageUrl = "https://tldr.tech/tech/" + date
         self.articles = []
+
+    def timeNowRfc822(self):
+        return utils.format_datetime(datetime.now())
 
     def getPage(self):
         try: response = urlopen(self.pageUrl)
@@ -70,8 +75,9 @@ class Parser:
 <title>TLDR news</title>
 <link>https://tldr.tech/</link>
 <description>TLDR RSS</description>
+<lastBuildDate>DATE_PLACEHOLDER</lastBuildDate>
 '''
-        return feed
+        return feed.replace("DATE_PLACEHOLDER", self.timeNowRfc822())
 
     def generateFeedEnd(self):
         feed = '''</channel>
