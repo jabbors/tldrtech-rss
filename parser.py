@@ -75,7 +75,7 @@ class Parser:
 <title>TLDR news</title>
 <link>https://tldr.tech/</link>
 <description>TLDR RSS</description>
-<lastBuildDate>DATE_PLACEHOLDER</lastBuildDate>
+<pubDate>DATE_PLACEHOLDER</pubDate>
 '''
         return feed.replace("DATE_PLACEHOLDER", self.timeNowRfc822())
 
