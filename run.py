@@ -1,17 +1,42 @@
 # -*- coding: utf-8 -*-
+import argparse
+import os
 import sys
 from parser import Parser
 from minio import Minio
 from datetime import datetime
 
 file = "rss.xml"
-minio_host="play.min.io:9443"
-minio_connection_secure=True
-minio_access_key="Q3AM3UQ867SPQQA43P2F"
-minio_secret_key="zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG"
-minio_bucket = "test"
-minio_dest_file = "tldr/rss.xml"
- 
+minio_host = os.getenv("MINIO_HOST","play.min.io:443")
+minio_connection_secure = os.getenv("MINIO_CONNECTION_SUCRE", True)
+minio_access_key = os.getenv("MINIO_ACCESS_KEY", "Q3AM3UQ867SPQQA43P2F")
+minio_secret_key = os.getenv("MINIO_SECRET_KEY", "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG")
+minio_bucket = os.getenv("MINIO_BUCKET", "test")
+minio_dest_file = os.getenv("MINIO_DEST_FILE", "tldr/rss.xml")
+
+def print_help():
+    print(
+'''
+This application is configured via the environment. The following environment
+variables can be used:
+KEY                     TYPE    DEFAULT                                     REQUIRED    DESCRIPTION
+MINIO_HOST              String  play.min.io:443                                         host to connect to
+MINIO_CONNECTION_SECURE Boolean True                                                    connect using SSL
+MINIO_ACCESS_KEY        String  Q3AM3UQ867SPQQA43P2F                                    access key used when connecting
+MINIO_SECRET_KEY        String  zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG                secret key used when connecting
+MINIO_BUCKET            String  test                                                    bucket to put file in
+MINIO_DEST_FILE         String  tldr/rss.xml                                            destination of the file
+'''
+    )
+    sys.exit(0)
+
+try:
+    argparser = argparse.ArgumentParser()
+    options = argparser.parse_args()
+except:
+    print_help()
+    sys.exit(0)
+
 parser = Parser(datetime.now().strftime("%Y-%m-%d"))
 print("Downloading page ...")
 error = parser.getPage()
