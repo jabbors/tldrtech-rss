@@ -5,10 +5,11 @@ import sys
 from parser import Parser
 from minio import Minio
 from datetime import datetime
+from distutils.util import strtobool
 
 file = "rss.xml"
 minio_host = os.getenv("MINIO_HOST","play.min.io:443")
-minio_connection_secure = os.getenv("MINIO_CONNECTION_SUCRE", True)
+minio_connection_secure = strtobool(os.getenv("MINIO_CONNECTION_SECURE", "True"))
 minio_access_key = os.getenv("MINIO_ACCESS_KEY", "Q3AM3UQ867SPQQA43P2F")
 minio_secret_key = os.getenv("MINIO_SECRET_KEY", "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG")
 minio_bucket = os.getenv("MINIO_BUCKET", "test")
